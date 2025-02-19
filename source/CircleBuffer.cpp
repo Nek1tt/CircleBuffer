@@ -10,7 +10,7 @@ tail(cb.tail)
 }
 
 CircularBuffer::CircularBuffer(CircularBuffer&& cb) noexcept : buffer(std::move(cb.buffer)), cap(std::move(cb.cap)), 
-sizeBuf(std::move(cb.sizeBuf)), head(std::move(cb.head)), tail(std::move(tail))
+sizeBuf(std::move(cb.sizeBuf)), head(std::move(cb.head)), tail(std::move(cb.tail))
 {
 	std::cout << FUNCTION_NAME << " (Move Constructor)" << std::endl;
 }
@@ -105,7 +105,7 @@ value_type* CircularBuffer::linearize()
 
 bool CircularBuffer::is_linearized() const
 {
-	if (this->tail == 0 || this->head == this->sizeBuf)
+	if (this->tail == 0)
 	{
 		return true;
 	}
@@ -329,7 +329,7 @@ void CircularBuffer::clear()
 	this->head = 0;
 	this->tail = 0;
 	this->sizeBuf = 0;
-	std::memset(this->buffer, NULL, this->cap);
+	std::memset(this->buffer, NULL, this->cap * sizeof(value_type));
 }
 
 
